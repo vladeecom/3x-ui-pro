@@ -37,7 +37,13 @@ effect on servers only after push to `main`.
    Clash/Mihomo user agents get generated clash.yaml, `?provider=1` bypasses it
 10. Downloads a random fake cover site (`install_fake_site`) → `/var/www/html/`
 11. Installs network diagnostics (`install_diagnostics`) → `/var/www/diagnostics/` +
-    `mtr-backend` systemd service (hardened, dedicated user, localhost-only)
+    `mtr-backend` systemd service (hardened, dedicated user, localhost-only).
+    Access only via `/<panel_path>/diag` (SSO bridge): nginx auth_request validates
+    the 3x-ui session against `GET <basePath>/panel/` (with X-Requested-With header →
+    401 instead of login redirect), then issues a path-scoped `diag_key` cookie and
+    redirects to the diag page; all diag locations 404 without that cookie.
+    The 3x-ui session cookie is Path-scoped to the panel base path, which is why
+    the bridge must live under the panel path
 12. Tunes kernel/BBR (`tune_system`)
 13. Sets up cron (`setup_cron`) — daily x-ui restart + nginx reload; monthly certbot renew
     with pre/post hooks stopping/starting nginx (certs are standalone-issued)
