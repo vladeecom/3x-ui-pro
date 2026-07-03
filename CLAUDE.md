@@ -32,7 +32,11 @@ effect on servers only after push to `main`.
 6. Installs 3x-ui panel from MHSanaei/3x-ui latest release (`install_panel`)
 7. Configures nginx (`configure_nginx`) — SNI stream (443 → reality:8443 / panel:7443),
    per-domain vhosts, shared includes snippet, rate-limit zones
-8. Pushes all settings and inbounds into x-ui.db (`configure_xui_db`)
+8. Pushes all settings and inbounds into x-ui.db (`configure_xui_db`).
+   Share-link endpoints use the `hosts` table (supersedes legacy `externalProxy`
+   arrays in stream_settings): one host per inbound — REALITY gets
+   `security=same`, the rest front through nginx :443 with `security=tls`,
+   fingerprint firefox
 9. Installs Clash subscription template (`install_clash_sub`) → `/var/www/subpage/clash.yaml.tpl`;
    Clash/Mihomo user agents get generated clash.yaml, `?provider=1` bypasses it
 10. Downloads a random fake cover site (`install_fake_site`) → `/var/www/html/`
