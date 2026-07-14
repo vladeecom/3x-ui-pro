@@ -7,6 +7,8 @@ Refactored single-file installer for 3x-ui VPN panel (based on x-ui-pro).
 ```
 x-ui-latest.sh          — main installer script (single file, run remotely)
 x-ui-patch.sh           — apply current features to an existing install (no DB changes)
+x-ui-adguard.sh         — optional: AdGuard Home on the panel domain (DoH at
+                          /dns-query, admin UI at random /adg-<rand>/ path)
 assets/
   backup/x-ui-backup.sh — backup / restore / list script
   clash/clash.yaml      — Clash/Mihomo subscription template (served by UA sniffing)
@@ -88,4 +90,14 @@ Patch an existing install (re-reads ports/paths from x-ui.db and nginx):
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/mozaroc/3x-ui-pro/main/x-ui-patch.sh)
+```
+
+Add AdGuard Home on the panel domain (standalone, re-run safe, `-uninstall y`
+to remove). AGH binds localhost only; nginx bridges `/dns-query` (DoH,
+`allow_unencrypted_doh`) and a random `/adg-<rand>/` admin path via
+`snippets/adguard.conf` included in the panel vhost. Installer/patch
+regenerate the vhost and drop that include — re-run this script after them:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/mozaroc/3x-ui-pro/main/x-ui-adguard.sh)
 ```
