@@ -27,7 +27,7 @@ effect on servers only after push to `main`.
 ## What x-ui-latest.sh does
 
 1. Checks OS (Ubuntu 24.04/26.04, Debian 12/13) and rejects QEMU-emulated CPUs
-2. Parses CLI arguments (`-install y`, `-subdomain`, `-reality_domain`, `-auto_domain y`, `-uninstall y`)
+2. Parses CLI arguments (`-install y`, `-subdomain`, `-reality_domain`, `-auto_domain y`, `-version <ver>`, `-uninstall y`)
 3. Validates domains (panel ≠ REALITY), then stops/cleans any previous install
 4. Installs packages (`install_packages`) — nginx-full, certbot, sqlite3, ufw, mtr, python3 …
 5. Obtains Let's Encrypt certs via certbot standalone (`get_ssl_certs`) — panel + reality domains
