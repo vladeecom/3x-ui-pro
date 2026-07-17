@@ -27,7 +27,7 @@ effect on servers only after push to `main`.
 ## What x-ui-latest.sh does
 
 1. Checks OS (Ubuntu 24.04/26.04, Debian 12/13) and rejects QEMU-emulated CPUs
-2. Parses CLI arguments (`-install y`, `-subdomain`, `-reality_domain`, `-auto_domain y`, `-version <ver>`, `-uninstall y`)
+2. Parses CLI arguments (`-install n` to skip package install — default `y`, `-subdomain`, `-reality_domain`, `-auto_domain y`, `-version <ver>`, `-uninstall y`)
 3. Validates domains (panel ≠ REALITY), then stops/cleans any previous install
 4. Installs packages (`install_packages`) — nginx-full, certbot, sqlite3, ufw, mtr, python3 …
 5. Obtains Let's Encrypt certs via certbot standalone (`get_ssl_certs`) — panel + reality domains
@@ -83,7 +83,7 @@ IP = `api/st/getip`. Speedtest locations use `limit_conn`, not `limit_req`
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/mozaroc/3x-ui-pro/main/x-ui-latest.sh) \
-  -install y -subdomain panel.example.com -reality_domain r.example.com
+  -subdomain panel.example.com -reality_domain r.example.com
 ```
 
 Patch an existing install (re-reads ports/paths from x-ui.db and nginx):
